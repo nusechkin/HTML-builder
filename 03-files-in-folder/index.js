@@ -3,7 +3,6 @@ const { readdir } = require('fs/promises');
 const { stdout } = require('process');
 const fs = require('fs/promises');
 const absPath = path.join(__dirname, 'secret-folder');
-console.log(absPath);
 
 (async () => {
     const files = await readdir(absPath, {withFileTypes: true});
