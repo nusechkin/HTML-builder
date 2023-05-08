@@ -16,7 +16,7 @@ const newPath = path.join(__dirname, 'files-copy');
         const filePath = path.join(absPath, file.name);
         const newFilePath = path.join(newPath, file.name);
         if (file.isFile()) {
-            const temp = await copyFile(filePath, newFilePath);
+            await copyFile(filePath, newFilePath);
         }
     }
 })();
