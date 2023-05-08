@@ -24,7 +24,6 @@ console.log(absPath);
                     outputToFile.write(data);
                     data = '';
                 });
-                console.log(file.name);
             }
         }
     }
