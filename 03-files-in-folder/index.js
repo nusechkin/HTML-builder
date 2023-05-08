@@ -1,5 +1,6 @@
 const path = require('path');
 const { readdir } = require('fs/promises');
+const { stdout } = require('process');
 const fs = require('fs/promises');
 const absPath = path.join(__dirname, 'secret-folder');
 console.log(absPath);
@@ -12,7 +13,7 @@ console.log(absPath);
             const name = file.name.substring(0, file.name.indexOf('.'));
             const ext = file.name.substring(file.name.indexOf('.') + 1);
             const sizeInBytes = await fileSize(filePath);
-            console.log(`${name} - ${ext} - ${sizeInBytes} bytes`);
+            stdout.write(`${name} - ${ext} - ${sizeInBytes} bytes\n`);
         }
     }
 })();
