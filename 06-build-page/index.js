@@ -12,9 +12,10 @@ let componentsArray = [];
 createDir();
 readTemplate();
 mergeStyles();
+collectAssets();
 
 async function createDir() {
-    const createDir = await mkdir(bundlePath, { recursive: true});
+    await mkdir(bundlePath, { recursive: true});
 }
 
 function readTemplate() {
@@ -96,4 +97,29 @@ async function mergeStyles() {
             }
         }
     }
+}
+
+async function collectAssets() {
+    const assetsPath = path.join(__dirname, 'assets');
+    const copiedAssetsPath = path.join(__dirname, 'project-dist', 'assets');
+    await mkdir(copiedAssetsPath, { recursive: true});
+    const dirs = await readdir(assetsPath, {withFileTypes: true});
+
+    for (const dir of dirs) {
+        const dirPath = path.join(assetsPath, dir.name);
+        const newDirPath = path.join(copiedAssetsPath, dir.name);
+        await mkdir(newDirPath, { recursive: true});
+
+        const files = await readdir(dirPath, {withFileTypes: true});
+        for (const file of files) {
+            const filePath = path.join(dirPath, file.name);
+            const newFilePath = path.join(newDirPath, file.name);
+            if (file.isFile()) {
+                await copyFile(filePath, newFilePath);
+            }
+        }
+    }
+}
+function copyFilesFromFolder(folderName) {
+
 }
