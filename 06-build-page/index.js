@@ -1,5 +1,6 @@
 const { readdir, mkdir, copyFile } = require('fs/promises');
 const fs = require('fs');
+const fsprom = require('fs/promises');
 const path = require('path');
 
 const bundlePath = path.join(__dirname, 'project-dist');
@@ -110,6 +111,10 @@ async function collectAssets() {
         const newDirPath = path.join(copiedAssetsPath, dir.name);
         await mkdir(newDirPath, { recursive: true});
 
+        for (const file of await fsprom.readdir(newDirPath)) {
+            await fsprom.unlink(path.join(newDirPath, file));
+        }
+
         const files = await readdir(dirPath, {withFileTypes: true});
         for (const file of files) {
             const filePath = path.join(dirPath, file.name);
@@ -119,7 +124,4 @@ async function collectAssets() {
             }
         }
     }
-}
-function copyFilesFromFolder(folderName) {
-
 }
